@@ -1,0 +1,97 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "linux-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  name      String?
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  hashedPassword  String?
+
+  courses   Course[] @relation("UserCourses")
+  saved     SavedCourse[]
+
+  progress  UserProgress[]
+}
+
+model Course {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String?
+
+  //tags
+  tags        String[]  
+
+  // Playlist info
+  playlistId    String?   // YouTube playlist ID
+  source        String    @default("youtube") // youtube | custom
+  thumbnail     String?
+  totalVideos   Int?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  authorId      String    @db.ObjectId
+  author        User      @relation("UserCourses", fields: [authorId], references: [id])
+
+  lessons       Lesson[]
+  savedBy       SavedCourse[]
+  shareId       String     @unique
+
+  progress  UserProgress[]
+
+}
+
+model Lesson {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  title       String
+  videoId     String       // YouTube video ID
+  description String?
+  thumbnail   String?
+  embedUrl    String
+  duration    Int?         // in seconds
+  order       Int
+
+  courseId    String   @db.ObjectId
+  course      Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+}
+
+model SavedCourse {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  courseId  String   @db.ObjectId
+  savedAt   DateTime @default(now())
+
+  user       User    @relation(fields: [userId], references: [id])
+  course     Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+}
+
+model UserProgress {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  courseId  String   @db.ObjectId
+
+  completedLessons String[] // store lesson IDs
+  currentLessonId  String?  // which lesson he last watched
+  updatedAt        DateTime @updatedAt
+  createdAt        DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+}
+
