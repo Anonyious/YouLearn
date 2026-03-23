@@ -1,192 +1,123 @@
-# **Qurato — Learn Without Distractions**
+# YourLearn
 
-Qurato transforms any YouTube playlist into a clean, structured, distraction-free course.
-If you’ve ever opened YouTube to learn something and ended up lost in recommendations… Qurato fixes that.
+> Turn any YouTube playlist into a structured, distraction-free course.
 
-Turn playlists into courses, track your progress, and stay focused — **all in one place.**
+YourLearn is a full-stack learning platform that converts YouTube playlists into organized, trackable courses — without ads, recommendations, or distractions.
 
----
+![YourLearn Dashboard](public/screenshot-dashboard.png)
 
-## 🚀 **Features**
-
-### **📌 Convert YouTube Playlists into Courses**
-
-Paste either:
-* A YouTube playlist link
-or
-* One or more individual YouTube video links
-
-Qurato will:
-* Extracts all videos
-* Organizes them into lessons
-* Removes all YouTube distractions
-* Gives you a minimal learning interface
-  
-### **🎯 Track Your Learning Progress**
-
-* Mark lessons as completed
-* Auto-start the next incomplete lesson
-* See your completion percentage on the dashboard
-
-### **💾 Save & Manage Courses**
-
-* Save any course
-* Quickly access created or saved courses
-* Edit course title/description
-* Delete or manage lessons easily
-
-### **🔗 Share Courses**
-
-Every course gets a unique public share link — share your playlists as clean learning paths.
-
-### **🌗 Modern UI + Dark/Light Mode**
-
-A sleek, minimal interface built for productivity:
-
-* Beautiful modern design
-* Intuitive UX
-* Fully responsive
-* Smooth animations
-* Dark/light mode support
+🌐 **Live:** [yourlearn.yourdomain.com](https://yourlearn.yourdomain.com)
 
 ---
 
-## 🧩 **Tech Stack**
+## Features
 
-### **Frontend**
-
-* **Next.js 14 (App Router)**
-* **React + TypeScript**
-* **Tailwind CSS**
-* **Framer Motion** (animations)
-* **NextAuth.js** (auth)
-
-### **Backend**
-
-* **Next.js Route Handlers**
-* **Prisma ORM**
-* **MongoDB**
-
-### **Other**
-
-* **ShadCN UI components**
-* **Vercel** (hosting)
-* **YouTube API** parsing + custom extraction
+- **Course Creation** — Paste any YouTube playlist URL or individual video links and instantly get a structured course
+- **Distraction-Free Player** — Clean video player with no ads, no recommendations, no comments
+- **Progress Tracking** — Mark lessons complete, track percentage, resume exactly where you left off
+- **Smart Dashboard** — Stats overview, continue learning banner, search, and tag-based filtering
+- **Authentication** — Google OAuth and email/password login
+- **Course Sharing** — Every course gets a unique public link
+- **Keyboard Shortcuts** — Press `C` to complete, arrow keys to navigate lessons
+- **Cinema Mode** — Fullscreen distraction-free learning
+- **Dark / Light Mode** — Full theme support with system preference detection
+- **Mobile Responsive** — Works on all screen sizes
 
 ---
 
-## 📦 **Installation & Setup**
+## Tech Stack
 
-Clone the repo:
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Auth | NextAuth.js (Google OAuth + Credentials) |
+| Database | MongoDB |
+| ORM | Prisma |
+| Styling | Tailwind CSS + shadcn/ui |
+| Animations | Framer Motion |
+| External API | YouTube Data API v3 |
 
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+
+- MongoDB database (Atlas or local)
+- YouTube Data API v3 key
+- Google OAuth credentials (optional)
+
+### Installation
 ```bash
-git clone https://github.com/yourusername/qurato.git
-cd qurato
-```
-
-Install dependencies:
-
-```bash
+git clone https://github.com/yourusername/yourlearn.git
+cd yourlearn
 npm install
+cp .env.example .env
 ```
 
-Create a `.env` file:
-
-```
-DATABASE_URL=your_mongodb_connection_string
-NEXTAUTH_SECRET=your_secret
+Fill in your `.env`:
+```env
+DATABASE_URL=mongodb+srv://username:password@cluster.mongodb.net/yourlearn
+NA_SECRET=your_nextauth_secret
 NEXTAUTH_URL=http://localhost:3000
-
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
+YOUTUBE_API_KEY=your_youtube_api_key
 ```
-
-Run the dev server:
-
 ```bash
+npx prisma db push
+npx prisma generate
 npm run dev
 ```
 
-Open **[http://localhost:3000](http://localhost:3000)**
+Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 🛠️ **Core Workflow**
-
-### **Creating a Course**
-
-1. Click **Create +**
-2. Paste a YouTube playlist link
-3. Qurato auto-generates:
-
-   * Course title
-   * Thumbnail
-   * All lessons
-4. You can edit, delete, or reorder lessons.
-
-### **Learning**
-
-* Open any lesson
-* Watch in a clean distraction-free player
-* Mark completed
-* Autoplay moves to the next incomplete lesson
-* Track full course progress
-
----
-
-## 📁 **Project Structure**
-
+## Project Structure
 ```
-/app
-  ├── (routes)
-  ├── api
-  │   ├── course
-  │   ├── lecture
-  │   └── auth
-/components
-/lib
-/prisma
-/public
-/types
+yourlearn/
+├── app/              # Routes + API handlers (Next.js App Router)
+├── components/       # UI + feature components
+├── lib/              # Auth, Prisma client, YouTube helpers
+├── prisma/           # MongoDB schema
+└── types/            # Shared TypeScript types
 ```
 
 ---
 
-## 🧪 **Production Ready**
+## Roadmap
 
-* Optimistic UI updates
-* Error handling on all endpoints
-* 100% mobile-first
-* Server actions + caching
-* Secure auth
-* Scalable prisma models
+Features planned for future development:
 
----
-
-## 🔮 **Upcoming Features**
-
-* Notes inside lessons
-* Daily streaks
-* Course recommendation engine
-* Export progress
-* Upload custom videos
+- [ ] Notes system — video-level and course-level notes with public/private toggle
+- [ ] AI lesson summarizer — generate key takeaways per lesson using LLM
+- [ ] Streak tracking and gamification
+- [ ] Course transcripts via YouTube captions
+- [ ] Public user profile pages
+- [ ] Playback speed preference per user
+- [ ] Quizzes and completion certificates
 
 ---
 
-## 🤝 **Contribute**
+## Known Issues
 
-PRs are welcome!
-If you’d like to contribute, just open an issue or create a pull request.
-
----
-
-## ⭐ **Support the Project**
-
-If you like Qurato, consider starring the repo — it helps a lot!
+- YouTube API has a daily quota limit — large playlists (100+ videos) consume more quota
+- Google OAuth requires `NEXTAUTH_URL` to exactly match your production domain
 
 ---
 
-## 👨‍💻 **Made by Utkal**
+## About
 
-Built with love, focus, and a desire to learn without noise.
+Built by **Abhinav Thakare** — a full-stack developer passionate about building tools that make learning more focused and effective.
 
+- GitHub: [@yourusername](https://github.com/yourusername)
+- LinkedIn: [Abhinav Thakare](https://linkedin.com/in/yourprofile)
+- Portfolio: [yourportfolio.com](https://yourportfolio.com)
+
+---
+
+## License
+
+[MIT](LICENSE)
